@@ -1,15 +1,17 @@
 interface Props {
   name: string
-  number: string
+  pokenumber: number
   source: string
+  key: number
 }
 
-export const Pokemon = ({ name, number, source }: Props) => {
+export const Pokemon = ({ name, pokenumber, source }: Props) => {
+  console.log(name)
   return (
     <div>
       <img src={source} />
       <p>Name: {name}</p>
-      <p>Number: {number}</p>
+      <p>Number: {pokenumber}</p>
     </div>
   )
 }
