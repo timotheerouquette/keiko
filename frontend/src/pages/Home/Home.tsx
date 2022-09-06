@@ -1,5 +1,7 @@
 import styles from "./Home.module.css"
 import { Pokemon } from "../../components/Pokemon"
+import React from "react"
+import { filterPokemonsByName } from "./pokemonfilter"
 
 const pokemonList = [
   {
@@ -20,11 +22,20 @@ const pokemonList = [
 ]
 
 export const Home = () => {
+  const [filterValue, setFilterValue] = React.useState("")
+
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterValue(event.target.value)
+  }
+
+  filterPokemonsByName(pokemonList, filterValue)
+
   return (
     <div className={styles.intro}>
       <div>Bienvenue sur ton futur pokédex !</div>
       <div>Tu vas pouvoir apprendre tout ce qu'il faut sur React et attraper des pokemons !</div>
-      {pokemonList.map(({ name, id }) => {
+      <input className={styles.input} onChange={onInputChange} value={filterValue} />
+      {filterPokemonsByName(pokemonList, filterValue).map(({ name, id }) => {
         return (
           <Pokemon
             name={name}

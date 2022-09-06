@@ -6,7 +6,6 @@ interface Props {
 }
 
 export const Pokemon = ({ name, pokenumber, source }: Props) => {
-  console.log(name)
   return (
     <div>
       <img src={source} />
