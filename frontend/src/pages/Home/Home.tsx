@@ -28,8 +28,6 @@ export const Home = () => {
     setFilterValue(event.target.value)
   }
 
-  filterPokemonsByName(pokemonList, filterValue)
-
   return (
     <div className={styles.intro}>
       <div>Bienvenue sur ton futur pokédex !</div>
