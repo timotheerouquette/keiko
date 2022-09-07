@@ -1,22 +1,23 @@
 import { useEffect } from "react"
+import styles from "./Pokemon.module.css"
 
 interface Props {
   name: string
   pokenumber: number
+  weight: number
+  height: number
   source: string
   key: number
 }
 
-export const Pokemon = ({ name, pokenumber, source }: Props) => {
-  useEffect(() => {
-    //console.log("Hello World")
-  })
-
+export const Pokemon = ({ name, pokenumber, weight, height, source }: Props) => {
   return (
-    <div>
+    <div className={styles.pokemon}>
+      <p>{name}</p>
       <img src={source} />
-      <p>Name: {name}</p>
-      <p>Number: {pokenumber}</p>
+      <p>Id: {pokenumber}</p>
+      <p>Weight: {weight}</p>
+      <p>Height: {height}</p>
     </div>
   )
 }

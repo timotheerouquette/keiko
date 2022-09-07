@@ -1,6 +1,8 @@
 interface Pokemon {
   name: string
   id: number
+  weight: number
+  height: number
 }
 
 export function filterPokemonsByName(pokemons: Pokemon[], name: string) {
