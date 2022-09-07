@@ -1,13 +1,11 @@
 import styles from "./Home.module.css"
 import { Pokemon } from "../../components/Pokemon"
-import React, { useEffect } from "react"
-import { filterPokemonsByName } from "./pokemonfilter"
+import { useEffect, useState } from "react"
+import { Loader } from "../../components/Loader"
 
 async function fetchPokemon() {
-  //return fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
   return response.json()
-  //.then(pokemonData => console.log(pokemonData))
 }
 
 interface PokemonInfo {
@@ -18,45 +16,41 @@ interface PokemonInfo {
 }
 
 export const Home = () => {
-  const isLoading = true
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  //const [filterValue, setFilterValue] = React.useState("")
+  const [pokemonList, updatePokemonList] = useState<PokemonInfo[]>([])
 
-  //const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //setFilterValue(event.target.value)
-  //}
-
-  //useEffect(() => {
-  //console.log("Hello World")
-  //}, [filterValue])
-
-  const [pokemonList, updatePokemonList] = React.useState<PokemonInfo[]>([])
+  console.log({ isLoading })
 
   useEffect(() => {
     fetchPokemon()
-      .then(pokemonData => updatePokemonList(pokemonData))
-      .then(isLoading => true)
+      .then(pokemonData => {
+        updatePokemonList(pokemonData)
+      })
+      .then(() => setIsLoading(false))
   }, [])
-
-  //console.log(pokemonList)
 
   return (
     <div className={styles.intro}>
       <div>Pokédex !</div>
-      <div className={styles.container}>
-        {pokemonList.map(({ name, id, weight, height }) => {
-          return (
-            <Pokemon
-              name={name}
-              pokenumber={id}
-              weight={weight}
-              height={height}
-              source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
-              key={id}
-            />
-          )
-        })}
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={styles.container}>
+          {pokemonList.map(({ name, id, weight, height }) => {
+            return (
+              <Pokemon
+                name={name}
+                pokenumber={id}
+                weight={weight}
+                height={height}
+                source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
+                key={id}
+              />
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
