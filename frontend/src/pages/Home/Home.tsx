@@ -3,28 +3,10 @@ import { Pokemon } from "../../components/Pokemon"
 import React, { useEffect } from "react"
 import { filterPokemonsByName } from "./pokemonfilter"
 
-const pokemonList = [
-  {
-    name: "Carapuce",
-    id: 7,
-    source: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
-  },
-  {
-    name: "Carabaffe",
-    id: 8,
-    source: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
-  },
-  {
-    name: "Tortank",
-    id: 9,
-    source: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
-  },
-]
-
-function fetchPokemon() {
-  return fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } }).then(response =>
-    response.json(),
-  )
+async function fetchPokemon() {
+  //return fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+  const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+  return response.json()
   //.then(pokemonData => console.log(pokemonData))
 }
 
@@ -43,7 +25,7 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    console.log("Hello World")
+    //console.log("Hello World")
   }, [filterValue])
 
   const [pokemonList, updatePokemonList] = React.useState<PokemonInfo[]>([])

@@ -9,7 +9,7 @@ interface Props {
 
 export const Pokemon = ({ name, pokenumber, source }: Props) => {
   useEffect(() => {
-    console.log("Hello World")
+    //console.log("Hello World")
   })
 
   return (
