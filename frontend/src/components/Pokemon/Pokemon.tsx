@@ -1,3 +1,5 @@
+import { useEffect } from "react"
+
 interface Props {
   name: string
   pokenumber: number
@@ -6,6 +8,10 @@ interface Props {
 }
 
 export const Pokemon = ({ name, pokenumber, source }: Props) => {
+  useEffect(() => {
+    console.log("Hello World")
+  })
+
   return (
     <div>
       <img src={source} />

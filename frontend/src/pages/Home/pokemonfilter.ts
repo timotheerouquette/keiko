@@ -4,7 +4,7 @@ interface Pokemon {
 }
 
 export function filterPokemonsByName(pokemons: Pokemon[], name: string) {
-  console.log(name)
+  //console.log(name)
 
   const newList = [] as Pokemon[]
 
