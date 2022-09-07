@@ -1,6 +1,6 @@
 import styles from "./Home.module.css"
 import { Pokemon } from "../../components/Pokemon"
-import React from "react"
+import React, { useEffect } from "react"
 import { filterPokemonsByName } from "./pokemonfilter"
 
 const pokemonList = [
@@ -21,6 +21,20 @@ const pokemonList = [
   },
 ]
 
+function fetchPokemon() {
+  return fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } }).then(response =>
+    response.json(),
+  )
+  //.then(pokemonData => console.log(pokemonData))
+}
+
+interface PokemonInfo {
+  id: number
+  name: string
+  height: number
+  weight: number
+}
+
 export const Home = () => {
   const [filterValue, setFilterValue] = React.useState("")
 
@@ -28,7 +42,15 @@ export const Home = () => {
     setFilterValue(event.target.value)
   }
 
-  filterPokemonsByName(pokemonList, filterValue)
+  useEffect(() => {
+    console.log("Hello World")
+  }, [filterValue])
+
+  const [pokemonList, updatePokemonList] = React.useState<PokemonInfo[]>([])
+
+  useEffect(() => {
+    fetchPokemon().then(pokemonData => updatePokemonList(pokemonData))
+  }, [])
 
   return (
     <div className={styles.intro}>
