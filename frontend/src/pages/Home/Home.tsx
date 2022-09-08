@@ -5,7 +5,7 @@ import { Loader } from "../../components/Loader"
 
 async function fetchPokemon() {
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
-  throw ""
+  //throw ""
   return response.json()
 }
 
