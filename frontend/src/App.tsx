@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
 import { Root } from "./components/Root"
 
-import { Home } from "./pages/Home"
+import { Home, Pokemonpage } from "./pages/Home"
 
 export const App = () => {
   return (
@@ -9,6 +9,7 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pokemon/:id" element={<Pokemonpage />} />
         </Routes>
       </BrowserRouter>
     </Root>

@@ -2,10 +2,11 @@ import styles from "./Home.module.css"
 import { Pokemon } from "../../components/Pokemon"
 import { useEffect, useState } from "react"
 import { Loader } from "../../components/Loader"
+import { Link } from "react-router-dom"
 
 async function fetchPokemon() {
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
-  throw ""
+  //throw ""
   return response.json()
 }
 
@@ -47,14 +48,16 @@ export const Home = () => {
           <div className={styles.container}>
             {pokemonList.map(({ name, id, weight, height }) => {
               return (
-                <Pokemon
-                  name={name}
-                  pokenumber={id}
-                  weight={weight}
-                  height={height}
-                  source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
-                  key={id}
-                />
+                <Link to={"/pokemon/" + id}>
+                  <Pokemon
+                    name={name}
+                    pokenumber={id}
+                    weight={weight}
+                    height={height}
+                    source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
+                    key={id}
+                  />
+                </Link>
               )
             })}
           </div>

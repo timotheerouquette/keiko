@@ -1,0 +1,11 @@
+.pokemonelement {
+  width: 300px;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
