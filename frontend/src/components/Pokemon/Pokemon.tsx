@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { Animate } from "../Animate"
 import styles from "./Pokemon.module.css"
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   key: number
 }
 
-export const Pokemon = ({ name, pokenumber, weight, height, source }: Props) => {
+const PokemonComponent = ({ name, pokenumber, weight, height, source }: Props) => {
   return (
     <div className={styles.pokemon}>
       <p>{name}</p>
@@ -21,3 +22,5 @@ export const Pokemon = ({ name, pokenumber, weight, height, source }: Props) => 
     </div>
   )
 }
+
+export const Pokemon = Animate<Props>("tada")(PokemonComponent)
