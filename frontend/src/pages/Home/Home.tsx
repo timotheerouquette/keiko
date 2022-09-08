@@ -5,6 +5,7 @@ import { Loader } from "../../components/Loader"
 
 async function fetchPokemon() {
   const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+  throw ""
   return response.json()
 }
 
@@ -18,39 +19,47 @@ interface PokemonInfo {
 export const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const [pokemonList, updatePokemonList] = useState<PokemonInfo[]>([])
+  const [hasFailed, setHasFailed] = useState<boolean>(false)
 
-  console.log({ isLoading })
+  const [pokemonList, updatePokemonList] = useState<PokemonInfo[]>([])
 
   useEffect(() => {
     fetchPokemon()
+      .catch(() => {
+        console.log("API request error")
+        setHasFailed(true)
+      })
       .then(pokemonData => {
         updatePokemonList(pokemonData)
       })
       .then(() => setIsLoading(false))
   }, [])
 
-  return (
-    <div className={styles.intro}>
-      <div>Pokédex !</div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className={styles.container}>
-          {pokemonList.map(({ name, id, weight, height }) => {
-            return (
-              <Pokemon
-                name={name}
-                pokenumber={id}
-                weight={weight}
-                height={height}
-                source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
-                key={id}
-              />
-            )
-          })}
-        </div>
-      )}
-    </div>
-  )
+  if (hasFailed) {
+    return <div className={styles.intro}>failed to load</div>
+  } else {
+    return (
+      <div className={styles.intro}>
+        <div>Pokédex !</div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className={styles.container}>
+            {pokemonList.map(({ name, id, weight, height }) => {
+              return (
+                <Pokemon
+                  name={name}
+                  pokenumber={id}
+                  weight={weight}
+                  height={height}
+                  source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
+                  key={id}
+                />
+              )
+            })}
+          </div>
+        )}
+      </div>
+    )
+  }
 }
