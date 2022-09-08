@@ -56,13 +56,13 @@
   }
 }
 
-.tadaAnimation {
+.tadaAnimation:hover {
   animation-duration: 500ms;
   animation-fill-mode: both;
   animation-name: tada;
 }
 
-.wobbleAnimation {
+.wobbleAnimation:hover {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: wobble;
