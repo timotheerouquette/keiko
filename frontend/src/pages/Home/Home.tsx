@@ -3,9 +3,12 @@ import { Pokemon } from "../../components/Pokemon"
 import { useEffect, useState } from "react"
 import { Loader } from "../../components/Loader"
 import { Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
-async function fetchPokemon() {
-  const response = await fetch("http://localhost:8000/pokemons", { headers: { accept: "application/json" } })
+async function fetchPokemon(page: string) {
+  const response = await fetch("http://localhost:8000/pokemons?page=" + page, {
+    headers: { accept: "application/json" },
+  })
   //throw ""
   return response.json()
 }
@@ -24,8 +27,10 @@ export const Home = () => {
 
   const [pokemonList, updatePokemonList] = useState<PokemonInfo[]>([])
 
+  const params = useParams()
+
   useEffect(() => {
-    fetchPokemon()
+    fetchPokemon(String(params.pageid))
       .catch(() => {
         console.log("API request error")
         setHasFailed(true)
@@ -34,32 +39,43 @@ export const Home = () => {
         updatePokemonList(pokemonData)
       })
       .then(() => setIsLoading(false))
-  }, [])
+  })
 
   if (hasFailed) {
     return <div className={styles.intro}>failed to load</div>
   } else {
     return (
       <div className={styles.intro}>
-        <div>Pokédex !</div>
+        <div className={styles.title}>Pokédex</div>
         {isLoading ? (
           <Loader />
         ) : (
-          <div className={styles.container}>
-            {pokemonList.map(({ name, id, weight, height }) => {
-              return (
-                <Link to={"/pokemon/" + id}>
-                  <Pokemon
-                    name={name}
-                    pokenumber={id}
-                    weight={weight}
-                    height={height}
-                    source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
-                    key={id}
-                  />
-                </Link>
-              )
-            })}
+          <div>
+            <div className={styles.arrows}>
+              <div>
+                <Link to={"/pokedex/" + String(Number(params.pageid) - 1)}>left</Link>
+              </div>
+              <div>
+                <Link to={"/pokedex/" + String(Number(params.pageid) + 1)}>right</Link>
+              </div>
+            </div>
+            <div className={styles.container}>
+              {pokemonList.map(({ name, id, weight, height }) => {
+                return (
+                  // eslint-disable-next-line react/jsx-key
+                  <Link to={"/pokemon/" + id}>
+                    <Pokemon
+                      name={name}
+                      pokenumber={id}
+                      weight={weight}
+                      height={height}
+                      source={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png"}
+                      key={id}
+                    />
+                  </Link>
+                )
+              })}
+            </div>
           </div>
         )}
       </div>

@@ -17,3 +17,12 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.title {
+  margin: 15px;
+}
+
+.arrows {
+  display: flex;
+  justify-content: space-between;
+}
